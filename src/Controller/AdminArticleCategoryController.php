@@ -263,8 +263,6 @@ class AdminArticleCategoryController extends AdminBaseController
         }
 
 
-
-
         $form = $this->createForm(ArticleCategoryType::class, $categoryRequest);
         $form->handleRequest($request);
 

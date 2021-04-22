@@ -36,7 +36,7 @@ class AdminArticleTypeController extends AdminBaseController
         $breadcrumbs->prepend("/admin", 'Главная');
         $forRender['breadcrumbs'] = $breadcrumbs;
 
-        return $this->render('/admin/articles/typelist.html.twig', $forRender);
+        return $this->render('@FlexyArticles/typelist.html.twig', $forRender);
     }
 
     /**
@@ -72,7 +72,7 @@ class AdminArticleTypeController extends AdminBaseController
         $breadcrumbs->prepend("/admin", 'Главная');
         $forRender['breadcrumbs'] = $breadcrumbs;
 
-        return $this->render("/admin/articles/typeform.html.twig", $forRender);
+        return $this->render("@FlexyArticles/typeform.html.twig", $forRender);
     }
 
     /**
@@ -111,7 +111,7 @@ class AdminArticleTypeController extends AdminBaseController
         $forRender['breadcrumbs'] = $breadcrumbs;
 
 
-        return $this->render("/admin/articles/typeform.html.twig", $forRender);
+        return $this->render("@FlexyArticles/typeform.html.twig", $forRender);
     }
 
     /**
