@@ -1,0 +1,27 @@
+{% extends '@FlexyAdminFrame/adminpanelbase.html.twig' %}
+{% block content %}
+
+
+    <div class="admin-btn-top">
+        <a href="{{ path('admin_articletypes_create') }}" class="btn btn-success"><i class="far fa-plus-square"></i><br>Добавить<br>тип</a>
+    </div>
+
+    <ul class="list-group">
+        {% for type in types %}
+
+            <li class="list-group-item">
+                <a href="{{ path('admin_articletypes_edit', {'id': type.id}) }}" class="btn btn-sm btn-primary">
+                    <i class="far fa-edit"></i>
+                </a>
+                <a href="{{ path('admin_articletypes_delete', {'id': type.id}) }}" class="btn btn-sm btn-danger" data-title="Подтвердите действие" data-message="Удалить тип статей?">
+                    <i class="far fa-trash-alt"></i>
+                </a>
+                <span class="ml-1">{{ type.name }}</span>
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+
+{% endblock %}

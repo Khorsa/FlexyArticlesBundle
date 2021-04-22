@@ -1,0 +1,216 @@
+{% extends '@FlexyAdminFrame/adminpanelbase.html.twig' %}
+
+{% block content %}
+
+
+
+    {{ form_start(form, { 'attr' : { 'class': 'article-form' } }) }}
+    <div class="admin-btn-top">
+        <a href="{{ backpath }}" class="btn btn-primary back btn"><i class="fas fa-arrow-left"></i><br>Вернуться</a>
+        {{ form_widget(form.save) | raw }}
+        {{ form_widget(form.apply) | raw }}
+    </div>
+    {{ form_errors(form) }}
+    {{ form_row(form.backpath) }}
+
+
+    <ul class="nav nav-tabs" id="editorTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Настройки</a>
+        </li>
+
+        {% if formModifiers.hasParameters == true %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="parameters-tab" data-toggle="tab" href="#parameters" role="tab" aria-controls="seo" aria-selected="false">Параметры</a>
+            </li>
+        {% endif %}
+
+        {% if formModifiers.textType != 0 %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="content-tab" data-toggle="tab" href="#content" role="tab" aria-controls="content" aria-selected="false">Текст</a>
+            </li>
+        {% endif %}
+
+        {% if formModifiers.hasRubrics == true %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="rubrics-tab" data-toggle="tab" href="#rubrics" role="tab" aria-controls="rubrics" aria-selected="false">Рубрики</a>
+            </li>
+        {% endif %}
+
+
+
+        {% if formModifiers.hasSEO == true %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">SEO</a>
+            </li>
+        {% endif %}
+
+        {% if formModifiers.hasImageAlbum == true %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="album-tab" data-toggle="tab" href="#album" role="tab" aria-controls="album" aria-selected="false">Фотоальбом</a>
+            </li>
+        {% endif %}
+
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="false">Служебное</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="editorTabContent">
+
+        <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            {{ form_row(form.title) }}
+
+            {% if formModifiers.hasRemark == true %}
+                {{ form_row(form.remark) }}
+            {% endif %}
+
+            {% if formModifiers.hasDate == true %}
+                {{ form_row(form.dateAt) }}
+            {% endif %}
+
+            {% if formModifiers.hasSEO == true %}
+                {{ form_row(form.code) }}
+            {% endif %}
+
+            {{ form_row(form.isPublished) }}
+            {{ form_row(form.parent) }}
+
+            {% if formModifiers.descriptionType == 1 %}
+                <div class="tinymce-wrapper">
+                    {{ form_row(form.description) }}
+                </div>
+            {% endif %}
+            {% if formModifiers.descriptionType == 2 %}
+                <div class="code-wrapper">
+                    {{ form_row(form.description) }}
+                </div>
+            {% endif %}
+
+            {% if formModifiers.hasImage == true %}
+                <div class="row article-form-image">
+                    <div class="col-auto">
+                        <img src="{{ uploads_path }}/{{ form.vars.value.imageFilename }}"  alt=""/>
+
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.image) }}
+                        {{ form_row(form.imageAlt) }}
+                        {{ form_row(form.imageTitle) }}
+                    </div>
+                </div>
+            {% endif %}
+
+
+        </div>
+
+
+
+
+{% if formModifiers.textType != 0 %}
+
+        <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">
+
+{% if formModifiers.textType == 1 %}
+            <div class="tinymce-wrapper">
+                {{ form_row(form.content) }}
+            </div>
+{% endif %}
+{% if formModifiers.textType == 2 %}
+            <div class="code-wrapper">
+                {{ form_row(form.content) }}
+            </div>
+{% endif %}
+        </div>
+{% endif %}
+
+
+
+        {% if formModifiers.hasRubrics == true %}
+            <div class="tab-pane fade" id="rubrics" role="tabpanel" aria-labelledby="rubrics-tab">
+
+                <div class="admin_checklist">
+                    {{ form_row(form.rubrics) }}
+                </div>
+
+            </div>
+        {% endif %}
+
+
+
+
+{% if formModifiers.hasSEO == true %}
+        <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+            {{ form_row(form.SEOTitle) }}
+            {{ form_row(form.SEODescription) }}
+            {{ form_row(form.SEOKeywords) }}
+        </div>
+{% endif %}
+
+{% if formModifiers.hasImageAlbum == true %}
+        <div class="tab-pane fade" id="album" role="tabpanel" aria-labelledby="album-tab">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="article[imageArray][]" id="article_imageArray" multiple="multiple">
+                        <label class="custom-file-label" for="article_imageArray">Выберите файлы</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button type="submit" id="article_uploadfiles" name="article[uploadfiles]" class="btn btn-success">Загрузить</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-imagephotos image-album-wrapper" data-id="{{ articleId }}" data-sortpath="{{ path('admin_articles_sortimages') }}">
+                {% for imageItem in imageArray %}
+                    <div class="image" data-image="{{ imageItem.image.name }}">
+                        <img src="{{ uploads_path }}/{{ imageItem.image.name }}"  alt=""/>
+
+                        <div class="buttons">
+                            <a href="#" class="edit" onclick="alert('В разработке'); return false;"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('admin_articles_deletephoto', {'id': articleId, 'file': imageItem.image.name}) }}" class="delete confirm-message" data-title="Подтвердите действие" data-message="Удалить фото?"><i class="far fa-trash-alt"></i></a>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endif %}
+
+
+        <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
+            {{ form_row(form.createAt) }}
+            {{ form_row(form.updateAt) }}
+            {{ form_row(form.articleType) }}
+            {{ form_row(form.sort) }}
+
+            {{ form_widget(form._token) }}
+
+        </div>
+
+
+
+
+        {% if formModifiers.hasParameters == true %}
+
+            <div class="tab-pane fade" id="parameters" role="tabpanel" aria-labelledby="parameters-tab">
+
+                {{ form_row(form.parameters) }}
+
+
+            </div>
+        {% endif %}
+
+
+
+
+
+    </div>
+
+
+    {{ form_end(form, {'render_rest': false}) }}
+
+{% endblock %}
+
+

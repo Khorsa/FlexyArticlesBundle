@@ -1,0 +1,72 @@
+{% extends '@FlexyAdminFrame/adminpanelbase.html.twig' %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+        <div class="admin-btn-top">
+            <a href="{{ path('admin_articletypes') }}" class="btn btn-primary back btn"><i class="fas fa-arrow-left"></i><br>Вернуться</a>
+            {{ form_widget(form.save) | raw }}
+            {{ form_widget(form.apply) | raw }}
+        </div>
+    {{ form_errors(form) }}
+
+    <ul class="nav nav-tabs" id="editorTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Настройки статей</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="parameters-tab" data-toggle="tab" href="#parameters" role="tab" aria-controls="parameters" aria-selected="true">Параметры</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="editorTabContent">
+
+        <div class="tab-pane fade" id="parameters" role="tabpanel" aria-labelledby="parameters-tab">
+
+            {{ form_row(form.parameters) }}
+
+            <a href="#" class="btn btn-info add-type">Добавить</a>
+
+        </div>
+
+        <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            {{ form_row(form.name) }}
+            {{ form_rest(form) }}
+        </div>
+
+    </div>
+    {{ form_end(form, {'render_rest': false}) }}
+
+    {# TODO: Эту часть надо бы формировать автоматически для параметра ##CODE##  #}
+    <div id="parameter-template">
+        <fieldset class="form-group">
+            <div id="article_type_parameters_##CODE##">
+                <div class="form-group">
+                    <button type="button" id="article_type_parameters_test_delete" name="article_type[parameters][test][delete]" class="btn btn-danger delete-parameter btn">
+                        <i class="far fa-minus-square"></i>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="article_type_parameters_##CODE##_code" class="required">код</label>
+                    <input type="text" id="article_type_parameters_##CODE##_code" name="article_type[parameters][##CODE##][code]" required="required" class="form-control" value="##CODE##">
+                </div>
+                <div class="form-group">
+                    <label for="article_type_parameters_##CODE##_label" class="required">метка</label>
+                    <input type="text" id="article_type_parameters_##CODE##_label" name="article_type[parameters][##CODE##][label]" required="required" class="form-control" value="">
+                </div>
+                <div class="form-group">
+                    <label for="article_type_parameters_##CODE##_type" class="required">тип</label>
+                    <select id="article_type_parameters_##CODE##_type" name="article_type[parameters][##CODE##][type]" class="form-control">
+                        <option value="string" selected="selected">строка</option>
+                        <option value="int">целое число</option>
+                        <option value="float">дробное число</option>
+                        <option value="datetime">дата и время</option>
+                        <option value="bool">флажок</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+{% endblock %}
+
+

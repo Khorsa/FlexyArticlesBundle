@@ -1,0 +1,25 @@
+parameters:
+# Здесь могут быть параметры бандла
+
+services:
+
+  # Конфигурация для всех сервисов  этого файла по умолчанию
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  # Регистрируем контроллеры бандла, сервисы и репозитории как DI-сервисы
+  flexycms\FlexyArticlesBundle\Repository\ArticleCategoryRepository: ~
+  flexycms\FlexyArticlesBundle\Repository\ArticleRepository: ~
+  flexycms\FlexyArticlesBundle\Repository\ArticleRubricRepository: ~
+  flexycms\FlexyArticlesBundle\Repository\ArticleTypeRepository: ~
+
+  flexycms\FlexyArticlesBundle\EntityRequest\ArticleCategoryRequest: ~
+  flexycms\FlexyArticlesBundle\EntityRequest\ArticleRequest: ~
+  flexycms\FlexyArticlesBundle\EntityRequest\ArticleRubricRequest: ~
+  flexycms\FlexyArticlesBundle\EntityRequest\ArticleTypeRequest: ~
+
+  flexycms\FlexyArticlesBundle\Controller\AdminArticleCategoryController: ~
+  flexycms\FlexyArticlesBundle\Controller\AdminArticleController: ~
+  flexycms\FlexyArticlesBundle\Controller\AdminArticleRubricController: ~
+  flexycms\FlexyArticlesBundle\Controller\AdminArticleTypeController: ~

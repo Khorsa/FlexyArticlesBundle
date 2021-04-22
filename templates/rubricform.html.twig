@@ -1,0 +1,69 @@
+{% extends '@FlexyAdminFrame/adminpanelbase.html.twig' %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+
+    <div class="admin-btn-top">
+        <a href="{{ path('admin_articlerubrics') }}" class="btn btn-primary back btn"><i class="fas fa-arrow-left"></i><br>Вернуться</a>
+        {{ form_widget(form.save) | raw }}
+        {{ form_widget(form.apply) | raw }}
+    </div>
+
+    {{ form_errors(form) }}
+
+    <ul class="nav nav-tabs" id="editorTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="parameters-tab" data-toggle="tab" href="#parameters" role="tab" aria-controls="parameters" aria-selected="true">Параметры</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">SEO</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="false">Служебное</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="editorTabContent">
+
+        <div class="tab-pane fade show active" id="parameters" role="tabpanel" aria-labelledby="parameters-tab">
+            {{ form_row(form.name) }}
+            {{ form_row(form.section) }}
+            {{ form_row(form.code) }}
+            {{ form_row(form.sort) }}
+            {{ form_row(form.textPosition) }}
+            {{ form_row(form.textColor) }}
+
+            <datalist id="rubriclist">
+                {% for section in rubricSectionList %}
+                    <option>{{ section.section }}</option>
+                {% endfor %}
+            </datalist>
+
+
+            <div class="row article-form-image">
+                <div class="col-auto">
+                    <img src="{{ uploads_path }}/{{ form.vars.value.imageFilename }}"  alt=""/>
+
+                </div>
+                <div class="col">
+                    {{ form_row(form.image) }}
+                    {{ form_row(form.imageAlt) }}
+                    {{ form_row(form.imageTitle) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+            {{ form_row(form.SEOTitle) }}
+            {{ form_row(form.SEODescription) }}
+            {{ form_row(form.SEOKeywords) }}
+        </div>
+
+        <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
+            {{ form_rest(form) }}
+        </div>
+    </div>
+
+    {{ form_end(form, {'render_rest': false}) }}
+
+{% endblock %}
