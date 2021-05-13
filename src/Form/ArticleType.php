@@ -190,7 +190,7 @@ class ArticleType extends AbstractType
             ))
             ->add('articleType', EntityType::class, array(
                 'label' => 'Тип статьи',
-                'class' => ArticleType::class,
+                'class' => \flexycms\FlexyArticlesBundle\Entity\ArticleType::class,
                 'placeholder' => '== Выберите тип ==',
                 'empty_data' => null,
                 'required' => true,

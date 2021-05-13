@@ -227,7 +227,7 @@ class AdminArticleRubricController extends AdminBaseController
         }
         catch (\Exception $ex)
         {
-            $this->addFlash("error", $ex->getMessage());
+            $this->addFlash("danger", $ex->getMessage());
             return $this->redirectToRoute("admin_articlerubrics");
         }
 
