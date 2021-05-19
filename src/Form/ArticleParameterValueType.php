@@ -51,9 +51,11 @@ class ArticleParameterValueType extends AbstractType
                     $type = DateTimeType::class;
                     $options = [
                         'widget' => 'single_text',
-                        'format' => 'yyyy-MM-dd HH:mm:ss',
+                        'format' => 'dd.MM.yyyy HH:mm:ss',
                         'html5' => false,
-                        'attr' => ['class' => 'js-datepicker']];
+                        'attr' => ['class' => 'js-datepicker', 'data-type' => 'datetime', 'autocomplete' => 'off', 'readonly' => 'readonly'],
+                        'row_attr' => ['class' => 'date-field'],
+                    ];
                     break;
                 case "bool":
                     $type = CheckboxType::class;
