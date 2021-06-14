@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -65,9 +66,12 @@ class ArticleType extends AbstractType
             ->add('dateAt', DateType::class, array(
                 'label' => 'Дата',
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd HH:mm:ss',
+                'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'js-datepicker'],
+                'required' => false,
+                'attr' => ['class' => 'js-datepicker', 'data-type' => 'date', 'autocomplete' => 'off'],
+                'row_attr' => ['class' => 'date-field'],
+
             ))
             ->add('code', TextType::class, array(
                 'label' => 'Код-ссылка статьи',
@@ -153,19 +157,22 @@ class ArticleType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('createAt', DateType::class, array(
+            ->add('createAt', DateTimeType::class, array(
                 'label' => 'Дата создания',
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd HH:mm:ss',
+                'format' => 'dd.MM.yyyy HH:mm:ss',
                 'html5' => false,
-                'attr' => ['class' => 'js-datepicker', 'readonly' => ''],
+                'attr' => ['class' => 'js-datepicker', 'data-type' => 'datetime', 'autocomplete' => 'off', 'readonly' => 'readonly'],
+                'row_attr' => ['class' => 'date-field'],
             ))
-            ->add('updateAt', DateType::class, array(
+            ->add('updateAt', DateTimeType::class, array(
                 'label' => 'Дата изменения',
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd HH:mm:ss',
+                'format' => 'dd.MM.yyyy HH:mm:ss',
                 'html5' => false,
-                'attr' => ['class' => 'js-datepicker', 'readonly' => ''],
+                'attr' => ['class' => 'js-datepicker', 'data-type' => 'datetime', 'autocomplete' => 'off', 'readonly' => 'readonly'],
+                'row_attr' => ['class' => 'date-field'],
+
             ))
             ->add('isPublished', CheckboxType::class, array(
                 'label' => 'Опубликовано',

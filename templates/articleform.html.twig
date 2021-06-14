@@ -90,7 +90,7 @@
             {% if formModifiers.hasImage == true %}
                 <div class="row article-form-image">
                     <div class="col-auto">
-                        <img src="{{ uploads_path }}/{{ form.vars.value.imageFilename }}"  alt=""/>
+                        <img src="{{ flexycms.uploads_path }}/{{ form.vars.value.imageFilename }}"  alt=""/>
 
                     </div>
                     <div class="col">
@@ -165,7 +165,7 @@
             <div class="article-imagephotos image-album-wrapper" data-id="{{ articleId }}" data-sortpath="{{ path('admin_articles_sortimages') }}">
                 {% for imageItem in imageArray %}
                     <div class="image" data-image="{{ imageItem.image.name }}">
-                        <img src="{{ uploads_path }}/{{ imageItem.image.name }}"  alt=""/>
+                        <img src="{{ flexycms.uploads_path }}/{{ imageItem.image.name }}"  alt=""/>
 
                         <div class="buttons">
                             <a href="#" class="edit" onclick="alert('В разработке'); return false;"><i class="fas fa-edit"></i></a>
