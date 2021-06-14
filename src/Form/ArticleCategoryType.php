@@ -2,6 +2,7 @@
 
 namespace flexycms\FlexyArticlesBundle\Form;
 
+use flexycms\FlexyArticlesBundle\Entity\ArticleType;
 use flexycms\FlexyArticlesBundle\Entity\ArticleCategory;
 use flexycms\FlexyArticlesBundle\EntityRequest\ArticleCategoryRequest;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
