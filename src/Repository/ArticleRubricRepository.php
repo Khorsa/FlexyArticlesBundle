@@ -32,7 +32,6 @@ class ArticleRubricRepository extends ServiceEntityRepository
         return parent::findAll();
     }
 
-
     public function getBySection($section): array
     {
         $qb = $this->createQueryBuilder('t');
@@ -45,7 +44,6 @@ class ArticleRubricRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
-
     /**
      * @return array
      */
@@ -56,8 +54,6 @@ class ArticleRubricRepository extends ServiceEntityRepository
             ->distinct(true);
         return $qb->getQuery()->execute();
     }
-
-
 
     /**
      * @param string $searchString
@@ -74,8 +70,10 @@ class ArticleRubricRepository extends ServiceEntityRepository
             $qb->addCriteria(Criteria::create()->andWhere(Criteria::expr()->contains("c.name", $searchString)));
         }
         if (is_array($order)) $qb->orderBy('c.'.$order[0], $order[1]);
-        $qb->setFirstResult($limit[0]);
-        $qb->setMaxResults($limit[1]);
+        if (is_array($limit)) {
+            if (is_numeric($limit[0])) $qb->setFirstResult((int)($limit[0]));
+            if (is_numeric($limit[1])) $qb->setMaxResults((int)($limit[1]));
+        }
         return $qb->getQuery()->execute();
     }
 
@@ -96,7 +94,6 @@ class ArticleRubricRepository extends ServiceEntityRepository
         }
         return $qb->getQuery()->getSingleScalarResult();
     }
-
 
     /**
      * @return int
@@ -141,43 +138,6 @@ class ArticleRubricRepository extends ServiceEntityRepository
         $this->dataManager->remove($rubric);
         $this->dataManager->flush();
     }
-
-
-
-
-    // /**
-    //  * @return ArticleRubric[] Returns an array of ArticleRubric objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ArticleRubric
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
-
-
-
-
 }
 
 

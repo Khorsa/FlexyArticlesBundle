@@ -52,8 +52,8 @@ class ArticleRepository extends ServiceEntityRepository
         }
         if (is_array($order)) $qb->orderBy('t.'.$order[0], $order[1]);
         if (is_array($limit)) {
-            $qb->setFirstResult($limit[0]);
-            $qb->setMaxResults($limit[1]);
+            if (is_numeric($limit[0])) $qb->setFirstResult((int)($limit[0]));
+            if (is_numeric($limit[1])) $qb->setMaxResults((int)($limit[1]));
         }
         return $qb->getQuery()->execute();
     }
@@ -110,10 +110,10 @@ class ArticleRepository extends ServiceEntityRepository
             $qb->addCriteria(Criteria::create()->andWhere(Criteria::expr()->contains("t.title", $searchString)));
         }
         if (is_array($order)) $qb->orderBy('t.'.$order[0], $order[1]);
-        $qb->setFirstResult($limit[0]);
-        $qb->setMaxResults($limit[1]);
-
-
+        if (is_array($limit)) {
+            if (is_numeric($limit[0])) $qb->setFirstResult((int)($limit[0]));
+            if (is_numeric($limit[1])) $qb->setMaxResults((int)($limit[1]));
+        }
 
         return $qb->getQuery()->execute();
     }
@@ -211,38 +211,6 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
 
-
-
-
-
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
     public function getAll(): array
     {
         return parent::findAll();
@@ -278,31 +246,4 @@ class ArticleRepository extends ServiceEntityRepository
         $this->dataManager->remove($article);
         $this->dataManager->flush();
     }
-
-    /*
-    public function uploadPicture(Article $article, UploadedFile $fileToUpload)
-    {
-        $file = $this->fileManager->upload($fileToUpload);
-
-        if ($file)
-        {
-            $oldFile = $this->fileManager->getFile($article->getImageFilename());
-            if ($oldFile) $this->fileManager->delete($oldFile);
-
-            $article->setImageFilename($file->getName());
-
-            dump($article);
-
-        }
-
-        return $file;
-    }
-
-    public function getImage(Article $article): ?File
-    {
-        $file = $this->fileManager->getFile($article->getImageFilename());
-        return $file;
-    }
-*/
-
 }

@@ -43,8 +43,6 @@ class ArticleTypeRepository extends ServiceEntityRepository
 
     public function create(ArticleType $category): ArticleType
     {
-//        $category->setCreateAt();
-//        $category->setUpdateAt();
         $this->dataManager->persist($category);
         $this->dataManager->flush();
 
@@ -53,39 +51,8 @@ class ArticleTypeRepository extends ServiceEntityRepository
 
     public function update(ArticleType $category): ArticleType
     {
-//        $category->setUpdateAt();
         $this->dataManager->flush();
 
         return $category;
     }
-
-
-    // /**
-    //  * @return ArticleType[] Returns an array of ArticleType objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ArticleType
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
