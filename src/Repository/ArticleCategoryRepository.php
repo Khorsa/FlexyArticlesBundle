@@ -54,8 +54,10 @@ class ArticleCategoryRepository extends ServiceEntityRepository
             $qb->addCriteria(Criteria::create()->andWhere(Criteria::expr()->contains("c.name", $searchString)));
         }
         if (is_array($order)) $qb->orderBy('c.'.$order[0], $order[1]);
-        $qb->setFirstResult($limit[0]);
-        $qb->setMaxResults($limit[1]);
+        if (is_array($limit)) {
+            if (is_numeric($limit[0])) $qb->setFirstResult((int)($limit[0]));
+            if (is_numeric($limit[1])) $qb->setMaxResults((int)($limit[1]));
+        }
         return $qb->getQuery()->execute();
     }
 
@@ -161,35 +163,4 @@ class ArticleCategoryRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-
-
-    // /**
-    //  * @return ArticleCategory[] Returns an array of ArticleCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ArticleCategory
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
